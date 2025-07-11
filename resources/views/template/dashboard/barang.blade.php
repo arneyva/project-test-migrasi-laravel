@@ -97,13 +97,16 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <th>Nama Barang</th>
-                                            <th>Kode Barang</th>
-                                            <th>Harga Barang</th>
-                                            <th>Tanggal Di input</th>
+										@foreach ($barangs as $item)
+									<tr>
+                                            <th>{{$item->nama}}</th>
+                                            <th>{{$item->kode}}</th>
+                                            <th>{{$item->harga}}</th>
+                                            <th>{{$item->created_at}}</th>
                                             <th>Aksi</th>
                                         </tr>
+										@endforeach
+                                       
                                     </tbody>
                                     <tfoot>
                                         <tr>
