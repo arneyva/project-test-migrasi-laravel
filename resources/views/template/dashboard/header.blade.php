@@ -92,7 +92,7 @@
                     <ul class="sidebar-menu" data-widget="tree">
                         <li class="header">Menu</li>
                         <li><a href="{{ url('transaksi') }}"><i class="icon-Layout-4-blocks"></i> <span>Transaksi</span></a></li>
-                        <li><a href="{{ url('barang') }}"><i class="icon-Layout-grid"></i> <span>Barang</span></a></li>
+                        <li><a href="{{ url('dashboard') }}"><i class="icon-Layout-grid"></i> <span>Barang</span></a></li>
                         <li><a href="{{ url('akses') }}"><i class="icon-Layout-grid"></i> <span>Manajemen Akses</span></a></li>
                     </ul>
                 </div>
