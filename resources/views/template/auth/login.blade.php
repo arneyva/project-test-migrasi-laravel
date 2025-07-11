@@ -1,4 +1,4 @@
-@extends('template.auth.header')
+@extends('template.auth.app')
 
 @section('title', 'Login')
 
