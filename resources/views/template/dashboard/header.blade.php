@@ -57,7 +57,6 @@
                 </div>
             </a>
         </div>
-
         <nav class="navbar navbar-static-top">
             <div class="app-menu"></div>
             <div class="navbar-custom-menu r-side">
@@ -85,7 +84,6 @@
             </div>
         </nav>
     </header>
-
     <!-- Sidebar -->
     <aside class="main-sidebar">
         <section class="sidebar position-relative">
@@ -101,14 +99,7 @@
             </div>
         </section>
     </aside>
-
-    <!-- Content -->
-    <div class="content-wrapper">
-        <div class="container-full">
             @yield('content')
-        </div>
-    </div>
-
     <!-- Footer -->
     <footer class="main-footer">
         <div class="pull-right d-none d-sm-inline-block">
