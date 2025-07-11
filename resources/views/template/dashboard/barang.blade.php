@@ -97,13 +97,13 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <td>
+                                        <tr>
                                             <th>Nama Barang</th>
                                             <th>Kode Barang</th>
                                             <th>Harga Barang</th>
                                             <th>Tanggal Di input</th>
                                             <th>Aksi</th>
-                                        </td>
+                                        </tr>
                                     </tbody>
                                     <tfoot>
                                         <tr>
