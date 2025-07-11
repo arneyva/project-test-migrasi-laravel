@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="{{ asset('assets/images/favicon.ico') }}">
+    <link rel="icon" href="{{ asset('template/images/favicon.ico') }}">
     <title>@yield('title', 'Technical Test Pako Group')</title>
 
     <!-- Vendors Style-->
@@ -52,8 +52,8 @@
             </a>
             <a href="{{ url('/') }}" class="logo">
                 <div class="logo-lg">
-                    <span class="light-logo"><img src="{{ asset('assets/images/logo-dark-text.png') }}" alt="logo"></span>
-                    <span class="dark-logo"><img src="{{ asset('assets/images/logo-light-text.png') }}" alt="logo"></span>
+                    <span class="light-logo"><img src="{{ asset('template/images/logo-dark-text.png') }}" alt="logo"></span>
+                    <span class="dark-logo"><img src="{{ asset('template/images/logo-light-text.png') }}" alt="logo"></span>
                 </div>
             </a>
         </div>
