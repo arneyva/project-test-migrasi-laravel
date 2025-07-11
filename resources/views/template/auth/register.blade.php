@@ -3,59 +3,86 @@
 @section('title', 'Register')
 
 @section('content')
-<div class="container min-vh-100 d-flex align-items-center justify-content-center">
-    <div class="col-12">
-        <div class="row justify-content-center g-0">
-            <div class="col-lg-5 col-md-5 col-12">
-                <div class="bg-white rounded10 shadow-lg">
-                    <div class="content-top-agile p-20 pb-0">
-                        <h2 class="text-primary">Get started with Us</h2>
-                        <p class="mb-0">Register a new membership</p>
-                    </div>
-                    <div class="p-40">
-                        <form method="POST" action="">
-                            <div class="form-group mb-3">
-                                <div class="input-group">
-                                    <span class="input-group-text bg-transparent"><i class="ti-user"></i></span>
-                                    <input type="text" class="form-control ps-15 bg-transparent" placeholder="Username" name="username" id="username" value="">
+    <div class="container min-vh-100 d-flex align-items-center justify-content-center">
+        <div class="col-12">
+            <div class="row justify-content-center g-0">
+                <div class="col-lg-5 col-md-5 col-12">
+                    <div class="bg-white rounded10 shadow-lg">
+                        <div class="content-top-agile p-20 pb-0">
+                            <h2 class="text-primary">Get started with Us</h2>
+                            <p class="mb-0">Register a new membership</p>
+                        </div>
+                        <div class="p-40">
+                            <form method="POST" action="{{ route('register') }}">
+                                @csrf
+
+                                <!-- Name -->
+                                <div class="form-group mb-3">
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-transparent"><i class="ti-user"></i></span>
+                                        <input type="text" class="form-control ps-15 bg-transparent" placeholder="Name"
+                                            name="name" id="name" value="{{ old('name') }}" required autofocus
+                                            autocomplete="name">
+                                    </div>
+                                    @error('name')
+                                        <small class="text-danger">{{ $message }}</small>
+                                    @enderror
                                 </div>
-                                <small class="text-danger"></small>
-                            </div>
-                            <div class="form-group mb-3">
-                                <div class="input-group">
-                                    <span class="input-group-text bg-transparent"><i class="ti-email"></i></span>
-                                    <input type="text" class="form-control ps-15 bg-transparent" id="email" name="email"
-                                        placeholder="Email Address" value="">
+
+                                <!-- Email -->
+                                <div class="form-group mb-3">
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-transparent"><i class="ti-email"></i></span>
+                                        <input type="email" class="form-control ps-15 bg-transparent" id="email"
+                                            name="email" placeholder="Email Address" value="{{ old('email') }}" required
+                                            autocomplete="username">
+                                    </div>
+                                    @error('email')
+                                        <small class="text-danger">{{ $message }}</small>
+                                    @enderror
                                 </div>
-                                <small class="text-danger"></small>
-                            </div>
-                            <div class="form-group mb-3">
-                                <div class="input-group">
-                                    <span class="input-group-text bg-transparent"><i class="ti-lock"></i></span>
-                                    <input type="password" class="form-control ps-15 bg-transparent" placeholder="Password" id="password1" name="password1">
+
+                                <!-- Password -->
+                                <div class="form-group mb-3">
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-transparent"><i class="ti-lock"></i></span>
+                                        <input type="password" class="form-control ps-15 bg-transparent"
+                                            placeholder="Password" id="password" name="password" required
+                                            autocomplete="new-password">
+                                    </div>
+                                    @error('password')
+                                        <small class="text-danger">{{ $message }}</small>
+                                    @enderror
                                 </div>
-                                <small class="text-danger"></small>
-                            </div>
-                            <div class="form-group">
-                                <div class="input-group mb-3">
-                                    <span class="input-group-text bg-transparent"><i class="ti-lock"></i></span>
-                                    <input type="password" class="form-control ps-15 bg-transparent" placeholder="Retype Password" id="password2" name="password2">
+
+                                <!-- Confirm Password -->
+                                <div class="form-group mb-3">
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-transparent"><i class="ti-lock"></i></span>
+                                        <input type="password" class="form-control ps-15 bg-transparent"
+                                            placeholder="Retype Password" id="password_confirmation"
+                                            name="password_confirmation" required autocomplete="new-password">
+                                    </div>
+                                    @error('password_confirmation')
+                                        <small class="text-danger">{{ $message }}</small>
+                                    @enderror
                                 </div>
-                            </div>
-                            <div class="row">
-                                <!-- /.col -->
-                                <div class="col-12 text-center">
-                                    <button type="submit" class="btn btn-info margin-top-10">SIGN IN</button>
+
+                                <!-- Submit -->
+                                <div class="row">
+                                    <div class="col-12 text-center">
+                                        <button type="submit" class="btn btn-info mt-3">REGISTER</button>
+                                    </div>
                                 </div>
-                                <!-- /.col -->
+                            </form>
+                            <div class="text-center">
+                                <p class="mt-15 mb-0">Already have an account?<a href="{{ route('login') }}"
+                                        class="text-danger ms-5"> Sign In</a></p>
                             </div>
-                        </form>
-                        <div class="text-center">
-                            <p class="mt-15 mb-0">Already have an account?<a href="{{route('login')}}" class="text-danger ms-5"> Sign In</a></p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+@endsection
