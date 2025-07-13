@@ -10,28 +10,28 @@ use Illuminate\Support\Facades\DB;
 
 class TransaksiController extends Controller
 {
-   
+
     public function index()
     {
         $barang = Barang::all();
         $transaksi = Transaksi::with('barang')->get();
 
-        $dataTransaksi = DB::table('transaksi')
-            ->join('barang', 'transaksi.barang_id', '=', 'barang.id')
-            ->selectRaw('DATE(tanggal) as date, SUM(quantity * harga) as total_transaksi')
-            ->groupBy(DB::raw('DATE(tanggal)'))
-            ->orderBy(DB::raw('DATE(tanggal)'))
-            ->get();
+        // $dataTransaksi = DB::table('transaksi')
+        //     ->join('barang', 'transaksi.barang_id', '=', 'barang.id')
+        //     ->selectRaw('DATE(tanggal) as date, SUM(quantity * harga) as total_transaksi')
+        //     ->groupBy(DB::raw('DATE(tanggal)'))
+        //     ->orderBy(DB::raw('DATE(tanggal)'))
+        //     ->get();
 
-        $labels = $dataTransaksi->pluck('date');
-        $totalTransaksi = $dataTransaksi->pluck('total_transaksi')->map(fn ($t) => (int) $t);
+        // $labels = $dataTransaksi->pluck('date');
+        // $totalTransaksi = $dataTransaksi->pluck('total_transaksi')->map(fn ($t) => (int) $t);
 
-        return view('transaksi.index', [
+        return view('template.dashboard.transaksi', [
             'barang' => $barang,
             'transaksi' => $transaksi,
-            'labels' => $labels->toJson(),
-            'total_transaksi' => $totalTransaksi->toJson(),
-            'target' => 500000
+            // 'labels' => $labels->toJson(),
+            // 'total_transaksi' => $totalTransaksi->toJson(),
+            // 'target' => 500000
         ]);
     }
 
