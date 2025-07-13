@@ -47,9 +47,9 @@
     <!-- Header -->
     <header class="main-header">
         <div class="d-flex align-items-center logo-box justify-content-start">
-            <a href="#" class="waves-effect waves-light nav-link d-none d-md-inline-block mx-10 push-btn bg-transparent" data-toggle="push-menu" role="button">
-                <span class="icon-Align-left"></span>
-            </a>
+             <a href="#" class="waves-effect waves-light nav-link d-none d-md-inline-block mx-10 push-btn bg-transparent" data-toggle="push-menu" role="button">
+                    <span class="icon-Align-left"><span class="path1"></span><span class="path2"></span><span class="path3"></span></span>
+                </a>
             <a href="{{ url('/') }}" class="logo">
                 <div class="logo-lg">
                     <span class="light-logo"><img src="{{ asset('template/images/logo-dark-text.png') }}" alt="logo"></span>
@@ -57,32 +57,32 @@
                 </div>
             </a>
         </div>
-        <nav class="navbar navbar-static-top">
-            <div class="app-menu"></div>
-            <div class="navbar-custom-menu r-side">
-                <ul class="nav navbar-nav">
-                    <li class="btn-group nav-item d-lg-inline-flex d-none">
-                        <a href="#" data-provide="fullscreen" class="waves-effect waves-light nav-link full-screen" title="Full Screen">
-                            <i class="icon-Expand-arrows"></i>
-                        </a>
-                    </li>
-                    <!-- User Account -->
-                    <li class="dropdown user user-menu">
-                        <a href="#" class="waves-effect waves-light dropdown-toggle" data-bs-toggle="dropdown" title="User">
-                            <i class="icon-User"></i>
-                        </a>
-                        <ul class="dropdown-menu animated flipInX">
-                            <li class="user-body">
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="{{ route('logout') }}">
-                                    <i class="ti-lock text-muted me-2"></i> Logout
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </nav>
+         <nav class="navbar navbar-static-top">
+                <!-- Sidebar toggle button-->
+                <div class="app-menu">
+                </div>
+                <div class="navbar-custom-menu r-side">
+                    <ul class="nav navbar-nav">
+                        <li class="btn-group nav-item d-lg-inline-flex d-none">
+                            <a href="#" data-provide="fullscreen" class="waves-effect waves-light nav-link full-screen" title="Full Screen">
+                                <i class="icon-Expand-arrows"><span class="path1"></span><span class="path2"></span></i>
+                            </a>
+                        </li>
+                        <!-- User Account-->
+                        <li class="dropdown user user-menu">
+                            <a href="#" class="waves-effect waves-light dropdown-toggle" data-bs-toggle="dropdown" title="User">
+                                <i class="icon-User"><span class="path1"></span><span class="path2"></span></i>
+                            </a>
+                            <ul class="dropdown-menu animated flipInX">
+                                <li class="user-body">
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="{{ url('logout') }}"><i class="ti-lock text-muted me-2"></i> Logout</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
     </header>
     <!-- Sidebar -->
     <aside class="main-sidebar">
@@ -90,11 +90,30 @@
             <div class="multinav">
                 <div class="multinav-scroll" style="height: 100%;">
                     <ul class="sidebar-menu" data-widget="tree">
-                        <li class="header">Menu</li>
-                        <li><a href="{{ url('transaksi') }}"><i class="icon-Layout-4-blocks"></i> <span>Transaksi</span></a></li>
-                        <li><a href="{{ url('dashboard') }}"><i class="icon-Layout-grid"></i> <span>Barang</span></a></li>
-                        <li><a href="{{ url('akses') }}"><i class="icon-Layout-grid"></i> <span>Manajemen Akses</span></a></li>
-                    </ul>
+                            <li class="header">Menu</li>
+                            <li class="">
+                                <a href="{{ route('transaksi.index') }}">
+                                    <i class="icon-Layout-4-blocks"><span class="path1"></span><span class="path2"></span></i>
+                                    <span>Transaksi</span>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="{{ route('dashboard.index') }}">
+                                    <i span class="icon-Layout-grid"><span class="path1"></span><span class="path2"></span></i>
+                                    <span>Barang</span>
+                                    <span class="pull-right-container">
+                                    </span>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="#">
+                                    <i span class="icon-Layout-grid"><span class="path1"></span><span class="path2"></span></i>
+                                    <span>Manajemen Akses</span>
+                                    <span class="pull-right-container">
+                                    </span>
+                                </a>
+                            </li>
+                        </ul>
                 </div>
             </div>
         </section>

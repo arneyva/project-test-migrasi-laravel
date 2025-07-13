@@ -13,7 +13,7 @@
                             <div class="box bg-primary-light pull-up">
                                 <div class="box-body p-xl-0">
                                     <div class="row align-items-center">
-                                        <div class="col-12 col-lg-3"><img src="{{asset('tamplate/images/svg-icon/color-svg/custom-14.svg')}}" alt=""></div>
+                                        <div class="col-12 col-lg-3"><img src="{{asset('template/images/svg-icon/color-svg/custom-14.svg')}}" alt=""></div>
                                         <div class="col-12 col-lg-9">
                                             <h2>Hello, Welcome Back!</h2>
                                             <p class="text-dark mb-0 fs-16">
@@ -129,5 +129,4 @@
                 </section>
         </div>
         {{-- sampe sini --}}
-   @endsection
- 
+@endsection
