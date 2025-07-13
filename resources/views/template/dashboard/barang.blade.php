@@ -46,7 +46,8 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <form class="form" method="POST" action="">
+                                <form class="form" method="POST" action="{{ route('dashboard.store') }}">
+                                    @csrf
                                     <div class="box-body">
                                         <h4 class="box-title text-info mb-0 mt-20"><i class="ti-save me-15"></i> Informasi Barang</h4>
                                         <hr class="my-15">
@@ -99,11 +100,39 @@
                                     <tbody>
 										@foreach ($barangs as $item)
 									<tr>
-                                            <th>{{$item->nama}}</th>
-                                            <th>{{$item->kode}}</th>
-                                            <th>{{$item->harga}}</th>
-                                            <th>{{$item->created_at}}</th>
-                                            <th>Aksi</th>
+                                            <td>{{$item->nama}}</td>
+                                            <td>{{$item->kode}}</td>
+                                            <td>{{$item->harga}}</td>
+                                            <td>{{$item->created_at}}</td>
+                                            <td>
+                                                    <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#modal-edit-{{ $item->id }}">
+                                                        Edit
+                                                    </button>
+                                                    <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#modal-delete-{{ $item->id }}">
+                                                        Delete
+                                                    </button>
+                                                    <div class="modal fade" id="modal-delete-{{ $item->id }}" tabindex="-1" aria-labelledby="modal-delete-label" aria-hidden="true">
+                                                        <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="modal-delete-label">Konfirmasi Hapus Barang</h5>
+                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    Apakah Anda yakin ingin menghapus barang <strong>{{ $item['nama'] }}</strong>?
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                                                                    <form action="{{ route('dashboard.destroy', $item->id) }}" method="POST" style="display:inline;">
+                                                                        @csrf 
+                                                                        @method('DELETE')
+                                                                        <button type="submit" class="btn btn-danger">Hapus</button>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
                                         </tr>
 										@endforeach
                                        
@@ -122,7 +151,40 @@
                         </div>
                     </div>
                 </div>
-            
+            @foreach ($barangs as $b)
+                    <div class="modal fade" id="modal-edit-{{ $b->id }}" tabindex="-1">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <form class="form" method="POST" action="{{ route('dashboard.update', $b->id) }}">
+                                    @csrf
+                                     @method('PUT')
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Edit Barang: {{ $b->nama }}</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <label>Nama</label>
+                                            <input type="text" name="nama" value="{{ $b->nama }}" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Kode</label>
+                                            <input type="text" name="kode" value="{{ $b->kode }}" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Harga</label>
+                                            <input type="number" step="0.01" name="harga" value="{{ $b->harga }}" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                                        <button type="submit" class="btn btn-success">Simpan Perubahan</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
             </div>
         </section>
     </div>
