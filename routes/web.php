@@ -26,13 +26,11 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-Route::prefix('dashboard')->name('dashboard.')->group(function () {
+Route::middleware(['auth'])->prefix('dashboard')->name('dashboard.')->group(function () {
     Route::get('/', [BarangController::class, 'index'])->name('index');
-    Route::get('/create', [BarangController::class, 'create'])->name('create');
-    Route::post('/', [BarangController::class, 'store'])->name('store');
-    Route::get('/{barang}/edit', [BarangController::class, 'edit'])->name('edit');
-    Route::put('/{barang}', [BarangController::class, 'update'])->name('update');
-    Route::delete('/{barang}', [BarangController::class, 'destroy'])->name('destroy');
+    Route::post('store', [BarangController::class, 'store'])->name('store');
+    Route::put('update/{id}', [BarangController::class, 'update'])->name('update');
+    Route::delete('destroy/{id}', [BarangController::class, 'destroy'])->name('destroy');
 });
 
 Route::middleware(['auth'])->group(function () {
@@ -43,4 +41,4 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/transaksi/harga/{id}', [TransaksiController::class, 'getHarga'])->name('transaksi.getHarga');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
