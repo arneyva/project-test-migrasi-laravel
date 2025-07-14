@@ -42,10 +42,15 @@
                                 <div class="modal-content">
                                     <form method="POST" action="">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="modalLabel">Tambah Data</h5>
+                                            <h5 class="modal-title" id="modalLabel">Tambah Data Transaksi</h5>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
                                         </div>
                                         <div class="modal-body">
+                                             <form class="form" method="POST" action="{{ route('dashboard.store') }}">
+                                    @csrf
+                                    <div class="box-body">
+                                        <h4 class="box-title text-info mb-0 mt-20"><i class="ti-save me-15"></i> Informasi Barang</h4>
+                                        <hr class="my-15">
                                             <div class="form-group mb-3">
                                                 <label for="barangSelect" class="form-label">Pilih Barang</label>
                                                 <select name="barang_id" id="barangSelect" class="js-example-basic-single" style="width: 100%;" required>
@@ -68,10 +73,10 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                                            <button type="submit" class="btn btn-primary">Simpan</button>
-                                        </div>
+                                        <div class="modal-uniform">
+                                          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Kembali</button>
+                                <button type="submit" class="btn btn-primary float-end">Tambah</button>
+                            </div>
                                     </form>
                                 </div>
                             </div>
@@ -82,30 +87,70 @@
                                     <h4 class="box-title">Laporan Transaksi</h4>
                                 </div>
                                 <div class="box-body">
-                                    <div class="table-responsive">
-                                        <table id="complex_header" class="table table-striped table-bordered display" style="width:100%">
-                                            <thead>
+                                   <div class="table-responsive">
+                                <table id="complex_header" class="table table-striped table-bordered display" style="width:100%">
+                                    <thead>
                                                 <tr>
-                                                    <th>Tanggal Transaksi</th>
-                                                    <th>Nama Barang</th>
+                                                   
                                                     <th>Kode Barang</th>
-                                                    <th>Harga</th>
                                                     <th>Quantity</th>
+                                                    <th>Harga</th>
                                                     <th>Total harga</th>
+                                                     <th>Tanggal Transaksi</th>
                                                     <th>Aksi</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                
-                                            </tbody>
+                                            @foreach ($transaksis as $item)
+<tr>
+    <td>{{ $item->barang->nama }}</td>
+    <td>{{ $item->quantity }}</td>
+    <td>{{ number_format($item->harga_satuan, 2) }}</td>
+    <td>{{ number_format($item->total, 2) }}</td>
+    <td>{{ $item->tanggal }}</td>
+    <td>
+        <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#modal-edit-{{ $item->id }}">
+            Edit
+        </button>
+        <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#modal-delete-{{ $item->id }}">
+            Delete
+        </button>
+
+        <!-- Modal Delete -->
+        <div class="modal fade" id="modal-delete-{{ $item->id }}" tabindex="-1" aria-labelledby="modal-delete-label" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modal-delete-label">Konfirmasi Hapus Transaksi</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Apakah Anda yakin ingin menghapus transaksi untuk barang <strong>{{ $item->barang->nama }}</strong> pada tanggal <strong>{{ $item->tanggal }}</strong>?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                        <form action="{{ route('transaksi.destroy', $item->id) }}" method="POST" style="display:inline;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger">Hapus</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </td>
+</tr>
+@endforeach
+
+                                       
+                                    </tbody>
                                             <tfoot>
                                                 <tr>
-                                                    <th>Tanggal Transaksi</th>
-                                                    <th>Nama Barang</th>
-                                                    <th>Kode Barang</th>
-                                                    <th>Harga</th>
+                                                     <th>Kode Barang</th>
                                                     <th>Quantity</th>
+                                                    <th>Harga</th>
                                                     <th>Total harga</th>
+                                                     <th>Tanggal Transaksi</th>
                                                     <th>Aksi</th>
                                                 </tr>
                                             </tfoot>
@@ -116,7 +161,52 @@
                         </div>
                     </div>
                     <!-- Modal Edit -->
-                   
+                   @foreach ($transaksis as $t)
+<div class="modal fade" id="modal-edit-{{ $t->id }}" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form class="form" method="POST" action="{{ route('transaksi.update', $t->id) }}">
+                @csrf
+                @method('PUT')
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Transaksi Barang: {{ $t->barang->nama }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group mb-2">
+                        <label for="barang_id">Barang</label>
+                        <select name="barang_id" class="form-control" disabled>
+                            @foreach ($barangs as $b)
+                                <option value="{{ $b->id }}" {{ $t->barang_id == $b->id ? 'selected' : '' }}>
+                                    {{ $b->nama }}
+                                </option>
+                            @endforeach
+                        </select>
+                        <small class="text-muted">Barang tidak dapat diubah.</small>
+                    </div>
+                    <div class="form-group mb-2">
+                        <label>Quantity</label>
+                        <input type="number" name="quantity" value="{{ $t->quantity }}" class="form-control" required>
+                    </div>
+                    <div class="form-group mb-2">
+                        <label>Harga Satuan</label>
+                        <input type="text" class="form-control" value="{{ number_format($t->harga_transaksi, 0) }}" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>Total</label>
+                        <input type="text" class="form-control" value="{{ number_format($t->total, 0) }}" readonly>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-success">Simpan Perubahan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@endforeach
+
                     <div class="col-xl-12 col-12">
                         <div class="box">
                             <div class="box-body">
