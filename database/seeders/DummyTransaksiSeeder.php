@@ -2,10 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
 use App\Models\Barang;
 use App\Models\Transaksi;
+use Illuminate\Database\Seeder;
 use Illuminate\Support\Carbon;
 
 class DummyTransaksiSeeder extends Seeder
@@ -13,7 +12,7 @@ class DummyTransaksiSeeder extends Seeder
     /**
      * Run the database seeds.
      */
-public function run(): void
+    public function run(): void
     {
         // Buat barang dummy dulu
         $barangs = [
@@ -45,5 +44,4 @@ public function run(): void
             ]);
         }
     }
-
 }

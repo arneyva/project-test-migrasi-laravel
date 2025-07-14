@@ -4,28 +4,30 @@ namespace App\Http\Controllers;
 
 use App\Models\Barang;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\Rule;
 
 class BarangController extends Controller
 {
     public function index()
     {
         $barangs = Barang::all();
+
         return view('template.dashboard.barang', compact('barangs'));
     }
+
     public function store(Request $request)
     {
         $validated = $request->validate([
             'nama' => ['required'],
             'kode' => ['required', Rule::unique('barangs')],
-            'harga' => ['required', 'numeric']
+            'harga' => ['required', 'numeric'],
         ]);
 
         DB::beginTransaction();
         try {
-            $barang = new Barang();
+            $barang = new Barang;
             $barang->nama = $request->nama;
             $barang->kode = $request->kode;
             $barang->harga = $request->harga;
@@ -38,11 +40,12 @@ class BarangController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
 
-            Log::error('Gagal menambahkan barang: ' . $e->getMessage());
+            Log::error('Gagal menambahkan barang: '.$e->getMessage());
 
             return redirect()->back()->with('error', 'Barang gagal ditambahkan');
         }
     }
+
     public function update(Request $request, string $id)
     {
         $validated = $request->validate([
@@ -67,11 +70,12 @@ class BarangController extends Controller
                 ->with('success', 'Barang berhasil diperbarui');
         } catch (\Exception $e) {
             DB::rollBack();
-            Log::error("Update barang gagal: " . $e->getMessage());
+            Log::error('Update barang gagal: '.$e->getMessage());
 
             return redirect()->back()->with('error', 'Barang gagal ditambahkan');
         }
     }
+
     public function destroy(string $id)
     {
         $barang = Barang::find($id);
@@ -79,6 +83,7 @@ class BarangController extends Controller
             return redirect()->back()->with('error', 'Barang memiliki transaksi sebelumnya, tidak dapat dihapus.');
         }
         $barang->delete();
+
         return redirect()->route('dashboard.index')->with('success', 'Barang berhasil dihapus');
     }
 }

@@ -12,11 +12,9 @@ class AksesController extends Controller
      */
     public function index()
     {
-       $users = User::with('roles')->get();
-       foreach ($users as $user) {
-        echo $user->name . ' - Roles: ' . $user->roles->pluck('name')->join(', ') . '<br>';
-        return view('template.dashboard.akses',compact('users'));
-    }
+        $users = User::with('roles')->get();
+
+        return view('template.dashboard.akses', compact('users'));
     }
 
     /**
@@ -53,10 +51,25 @@ class AksesController extends Controller
 
     /**
      * Update the specified resource in storage.
+     *
+     * @return \Illuminate\Http\Response
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validated = $request->validate([
+            'nama' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'useraccess' => 'required|string|exists:roles,name',
+        ]);
+
+        $user = User::findOrFail($id);
+        $user->name = $validated['nama'];
+        $user->email = $validated['email'];
+        $user->save();
+
+        $user->syncRoles($validated['useraccess']);
+
+        return redirect()->back()->with('success', 'User berhasil diperbarui.');
     }
 
     /**

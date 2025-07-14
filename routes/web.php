@@ -20,8 +20,10 @@ Route::get('/transaksi', function () {
 })->middleware(['auth', 'verified'])->name('transaksi');
 
 Route::middleware('auth')->group(function () {
-Route::get('/akses',[AksesController::class,'index'])->name('akses.index');
-});  
+    Route::get('/akses', [AksesController::class, 'index'])->name('akses.index');
+    Route::patch('/update/{id}', [AksesController::class, 'update'])->name('akses.update');
+
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -50,4 +52,4 @@ Route::get('/transaksi/getHarga/{id}', function ($id) {
 });
 
 
-require __DIR__ . '/auth.php';
+require __DIR__.'/auth.php';

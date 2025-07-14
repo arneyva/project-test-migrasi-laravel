@@ -20,6 +20,8 @@ class Transaksi extends Model
         'total'
     ];
 
+    protected $table = 'transaksis';
+
     public function barang()
     {
         return $this->belongsTo(Barang::class);
