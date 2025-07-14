@@ -6,24 +6,24 @@ use App\Models\Barang;
 use App\Models\Transaksi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
 class TransaksiController extends Controller
 {
+    public function index()
+    {
+        $barangs = Barang::all();
+        $transaksis = Transaksi::with('barang')->get();
 
-   public function index()
-{
-    $barangs = Barang::all();
-    $transaksis = Transaksi::with('barang')->get();
+        return view('template.dashboard.transaksi', [
+            'barangs' => $barangs,
+            'transaksis' => $transaksis,
+        ]);
+    }
 
-    return view('template.dashboard.transaksi', [
-        'barangs' => $barangs,
-        'transaksis' => $transaksis,
-    ]);
-}
     public function getHarga($id)
     {
         $barangs = Barang::find($id);
+
         return response()->json(['harga' => $barangs ? $barangs->harga : null]);
     }
 
@@ -52,6 +52,7 @@ class TransaksiController extends Controller
     public function destroy($id)
     {
         Transaksi::destroy($id);
+
         return redirect()->route('transaksi.index')->with('success', 'Transaksi berhasil dihapus!');
     }
 
@@ -66,7 +67,7 @@ class TransaksiController extends Controller
 
         $transaksis->update([
             'quantity' => $request->quantity,
-            'total' => $barangs->harga * $request->quantity
+            'total' => $barangs->harga * $request->quantity,
         ]);
 
         return redirect()->route('transaksi.index')->with('success', 'Transaksi berhasil diperbarui!');

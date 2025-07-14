@@ -16,7 +16,9 @@ class Transaksi extends Model
         'total',
         'tanggal',
     ];
-protected $table = 'transaksis';
+
+    protected $table = 'transaksis';
+
     public function barang()
     {
         return $this->belongsTo(Barang::class);

@@ -12,7 +12,9 @@ class Barang extends Model
     use HasFactory;
 
     protected $fillable = ['nama', 'kode', 'harga'];
+
     protected $table = 'barangs';
+
     public function transaksi(): HasMany
     {
         return $this->hasMany(Transaksi::class, 'barang_id', 'id');

@@ -16,10 +16,10 @@ class BarangFactory extends Factory
      */
     public function definition(): array
     {
-       return [
-        'nama' => $this->faker->word(),
-        'kode' => strtoupper($this->faker->bothify('BRG-###')),
-        'harga' => $this->faker->randomFloat(2, 1000, 100000),
-    ];
+        return [
+            'nama' => $this->faker->word(),
+            'kode' => strtoupper($this->faker->bothify('BRG-###')),
+            'harga' => $this->faker->randomFloat(2, 1000, 100000),
+        ];
     }
 }
