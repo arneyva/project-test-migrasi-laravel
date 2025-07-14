@@ -11,34 +11,20 @@ use Illuminate\Support\Facades\DB;
 class TransaksiController extends Controller
 {
 
-    public function index()
-    {
-        $barang = Barang::all();
-        $transaksi = Transaksi::with('barang')->get();
+   public function index()
+{
+    $barangs = Barang::all();
+    $transaksis = Transaksi::with('barang')->get();
 
-        // $dataTransaksi = DB::table('transaksi')
-        //     ->join('barang', 'transaksi.barang_id', '=', 'barang.id')
-        //     ->selectRaw('DATE(tanggal) as date, SUM(quantity * harga) as total_transaksi')
-        //     ->groupBy(DB::raw('DATE(tanggal)'))
-        //     ->orderBy(DB::raw('DATE(tanggal)'))
-        //     ->get();
-
-        // $labels = $dataTransaksi->pluck('date');
-        // $totalTransaksi = $dataTransaksi->pluck('total_transaksi')->map(fn ($t) => (int) $t);
-
-        return view('template.dashboard.transaksi', [
-            'barang' => $barang,
-            'transaksi' => $transaksi,
-            // 'labels' => $labels->toJson(),
-            // 'total_transaksi' => $totalTransaksi->toJson(),
-            // 'target' => 500000
-        ]);
-    }
-
+    return view('template.dashboard.transaksi', [
+        'barangs' => $barangs,
+        'transaksis' => $transaksis,
+    ]);
+}
     public function getHarga($id)
     {
-        $barang = Barang::find($id);
-        return response()->json(['harga' => $barang ? $barang->harga : null]);
+        $barangs = Barang::find($id);
+        return response()->json(['harga' => $barangs ? $barangs->harga : null]);
     }
 
     public function store(Request $request)
@@ -48,16 +34,16 @@ class TransaksiController extends Controller
             'quantity' => 'required|numeric',
         ]);
 
-        $barang = Barang::findOrFail($request->barang_id);
+        $barangs = Barang::findOrFail($request->barang_id);
         $quantity = $request->quantity;
 
         Transaksi::create([
-            'barang_id' => $barang->id,
+            'barang_id' => $barangs->id,
             'user_id' => Auth::id(),
             'tanggal' => now()->toDateString(),
-            'harga_transaksi' => $barang->harga,
+            'harga_transaksi' => $barangs->harga,
             'quantity' => $quantity,
-            'total' => $barang->harga * $quantity,
+            'total' => $barangs->harga * $quantity,
         ]);
 
         return redirect()->route('transaksi.index')->with('success', 'Transaksi berhasil disimpan!');
@@ -75,12 +61,12 @@ class TransaksiController extends Controller
             'quantity' => 'required|numeric',
         ]);
 
-        $transaksi = Transaksi::findOrFail($id);
-        $barang = Barang::findOrFail($transaksi->barang_id);
+        $transaksis = Transaksi::findOrFail($id);
+        $barangs = Barang::findOrFail($transaksis->barang_id);
 
-        $transaksi->update([
+        $transaksis->update([
             'quantity' => $request->quantity,
-            'total' => $barang->harga * $request->quantity
+            'total' => $barangs->harga * $request->quantity
         ]);
 
         return redirect()->route('transaksi.index')->with('success', 'Transaksi berhasil diperbarui!');
