@@ -27,27 +27,27 @@ class TransaksiController extends Controller
         return response()->json(['harga' => $barangs ? $barangs->harga : null]);
     }
 
-    public function store(Request $request)
-    {
-        $request->validate([
-            'barang_id' => 'required|exists:barang,id',
-            'quantity' => 'required|numeric',
-        ]);
 
-        $barangs = Barang::findOrFail($request->barang_id);
-        $quantity = $request->quantity;
+   public function store(Request $request)
+{
+    $request->validate([
+        'barang_id' => 'required|exists:barangs,id',
+        'quantity' => 'required|numeric|min:1',
+    ]);
 
-        Transaksi::create([
-            'barang_id' => $barangs->id,
-            'user_id' => Auth::id(),
-            'tanggal' => now()->toDateString(),
-            'harga_transaksi' => $barangs->harga,
-            'quantity' => $quantity,
-            'total' => $barangs->harga * $quantity,
-        ]);
+    $barang = Barang::findOrFail($request->barang_id);
+    $quantity = $request->quantity;
 
-        return redirect()->route('transaksi.index')->with('success', 'Transaksi berhasil disimpan!');
-    }
+    Transaksi::create([
+        'barang_id'       => $barang->id,
+        'tanggal'         => now()->toDateString(),
+        'harga_satuan'    => $barang->harga,
+        'quantity'        => $quantity,
+        'total'           => $barang->harga * $quantity,
+    ]);
+
+    return redirect()->route('transaksi.index')->with('success', 'Transaksi berhasil disimpan!');
+}
 
     public function destroy($id)
     {
