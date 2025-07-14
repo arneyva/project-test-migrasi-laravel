@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('template.auth.login');
 });
+Route::get('/transaksi/getHarga/{id}', [TransaksiController::class, 'getHarga']);
 
 Route::get('/dashboard', function () {
     return view('template.dashboard.barang');
@@ -41,5 +42,12 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/transaksi/{id}', [TransaksiController::class, 'update'])->name('transaksi.update');
     Route::get('/transaksi/harga/{id}', [TransaksiController::class, 'getHarga'])->name('transaksi.getHarga');
 });
+Route::get('/transaksi/getHarga/{id}', function ($id) {
+    $barang = \App\Models\Barang::find($id);
+    return response()->json([
+        'harga' => $barang ? $barang->harga : 0
+    ]);
+});
+
 
 require __DIR__ . '/auth.php';
