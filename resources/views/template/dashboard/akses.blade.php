@@ -50,7 +50,14 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                       
+                                       @foreach ($users as $user )
+                                       <tr>
+                                           <td>{{$user->name}}</td>
+                                           <td>{{$user->email}}</td>
+                                           <td>{{$user->roles->first()->name ?? 'No Role'}}</td>     
+                                           <td></td>                                      
+                                       @endforeach
+                                       </tr>
                                     </tbody>
                                     <tfoot>
                                         <tr>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AksesController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TransaksiController;
@@ -17,9 +18,9 @@ Route::get('/transaksi', function () {
     return view('template.dashboard.transaksi');
 })->middleware(['auth', 'verified'])->name('transaksi');
 
-Route::get('/akses', function () {
-    return view('template.dashboard.akses');
-})->middleware(['auth', 'verified'])->name('akses');
+Route::middleware('auth')->group(function () {
+Route::get('/akses',[AksesController::class,'index'])->name('akses.index');
+});  
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

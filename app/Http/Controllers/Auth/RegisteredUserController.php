@@ -44,7 +44,9 @@ class RegisteredUserController extends Controller
         event(new Registered($user));
 
         Auth::login($user);
-
-        return redirect(route('dashboard', absolute: false));
+        if ($user && !$user->roles()->exists()) {
+            $user->assignRole('user');
+        }
+        return redirect(route('dashboard.index', absolute: false));
     }
 }
