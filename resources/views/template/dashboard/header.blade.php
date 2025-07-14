@@ -124,7 +124,7 @@
                                 </a>
                             </li>
                             <li class="">
-                                <a href="#">
+                                <a href="{{ route('akses.index') }}">
                                     <i span class="icon-Layout-grid"><span class="path1"></span><span
                                             class="path2"></span></i>
                                     <span>Manajemen Akses</span>
