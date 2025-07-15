@@ -16,7 +16,25 @@ class BarangController extends Controller
 
         return view('template.dashboard.barang', compact('barangs'));
     }
+    // Untuk AG Grid (data API JSON)
+    public function apiIndex()
+    {
+        try {
+            $data = Barang::all();
 
+            return response()->json([
+                'success' => true,
+                'message' => 'Data berhasil diambil',
+                'data' => $data
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Terjadi kesalahan: ' . $e->getMessage(),
+                'data' => []
+            ], 500);
+        }
+    }
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -40,7 +58,7 @@ class BarangController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
 
-            Log::error('Gagal menambahkan barang: '.$e->getMessage());
+            Log::error('Gagal menambahkan barang: ' . $e->getMessage());
 
             return redirect()->back()->with('error', 'Barang gagal ditambahkan');
         }
@@ -70,7 +88,7 @@ class BarangController extends Controller
                 ->with('success', 'Barang berhasil diperbarui');
         } catch (\Exception $e) {
             DB::rollBack();
-            Log::error('Update barang gagal: '.$e->getMessage());
+            Log::error('Update barang gagal: ' . $e->getMessage());
 
             return redirect()->back()->with('error', 'Barang gagal ditambahkan');
         }
