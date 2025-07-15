@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="{{ asset('template/main/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('template/main/css/skin_color.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" />
-
+ @stack('head')
     <style>
         .select2-container--default .select2-selection--single {
             height: 38px;
@@ -123,6 +123,7 @@
                                     </span>
                                 </a>
                             </li>
+                            @role('admin')
                             <li class="">
                                 <a href="{{ route('akses.index') }}">
                                     <i span class="icon-Layout-grid"><span class="path1"></span><span
@@ -132,6 +133,7 @@
                                     </span>
                                 </a>
                             </li>
+                            @endrole
                         </ul>
                     </div>
                 </div>

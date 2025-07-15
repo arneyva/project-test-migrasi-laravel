@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AksesController;
 use App\Http\Controllers\BarangController;
+use App\Http\Controllers\GridController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TransaksiController;
 use Illuminate\Support\Facades\Route;
@@ -32,6 +33,7 @@ Route::middleware('auth')->group(function () {
 });
 Route::middleware(['auth'])->prefix('dashboard')->name('dashboard.')->group(function () {
     Route::get('/', [BarangController::class, 'index'])->name('index');
+    Route::get('/barangs', [BarangController::class, 'apiIndex']);
     Route::post('store', [BarangController::class, 'store'])->name('store');
     Route::put('update/{id}', [BarangController::class, 'update'])->name('update');
     Route::delete('destroy/{id}', [BarangController::class, 'destroy'])->name('destroy');
@@ -50,6 +52,7 @@ Route::get('/transaksi/getHarga/{id}', function ($id) {
         'harga' => $barang ? $barang->harga : 0
     ]);
 });
-
+Route::get('/grid', [GridController::class, 'index']);
+Route::get('/grid-data', [GridController::class, 'data']);
 
 require __DIR__.'/auth.php';
