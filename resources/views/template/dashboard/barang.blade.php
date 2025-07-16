@@ -1,10 +1,25 @@
 @extends('template.dashboard.header')
-@push('head')
-    <!-- Includes all JS & CSS for the JavaScript Data Grid -->
-    <script src="https://cdn.jsdelivr.net/npm/ag-grid-community/dist/ag-grid-community.min.js"></script>
-@endpush
 
 @section('title', 'Dashboard')
+@push('head')
+    @vite(['resources/js/barang.js'])
+@endpush
+@push('styles')
+    <style>
+        .ag-pivot-mode-select {
+            z-index: 9999 !important;
+            pointer-events: auto !important;
+        }
+
+        .ag-toggle-button-input-wrapper {
+            display: block !important;
+        }
+
+        .box-body {
+            overflow: visible !important;
+        }
+    </style>
+@endpush
 
 @section('content')
     <!-- Content Wrapper. Contains page content -->
@@ -182,9 +197,10 @@
                             <div class="box-header">
                                 <h4 class="box-title">List Data Barang ~ AG Grid</h4>
                             </div>
-                            <div class="box-body">
-                                <div id="myGrid" style="height: 500px"></div>
-                            </div>
+                            <div class="box-body" style="position: relative; overflow: visible;">
+    <div id="myGrid" class="ag-theme-quartz" style="height: 500px; width: 100%;"></div>
+</div>
+
                         </div>
                     </div>
                     @foreach ($barangs as $b)
@@ -232,66 +248,4 @@
         </div>
     </div>
 @endsection
-@push('scripts')
-    <script>
-        let gridApi;
 
-        const gridOptions = {
-            columnDefs: [{
-                    field: "nama",
-                    headerName: "Nama",
-                    editable: true
-                },
-                {
-                    field: "kode",
-                    headerName: "Kode"
-                },
-                {
-                    field: "harga",
-                    headerName: "Harga",
-                    filter: "agNumberColumnFilter"
-                },
-                {
-                    field: "created_at",
-                    headerName: "Tanggal di Input",
-                    sortable: true,
-                    valueFormatter: (params) => {
-                        if (!params.value) return "";
-                        const date = new Date(params.value);
-                        return date.toLocaleDateString("id-ID", {
-                            year: "numeric",
-                            month: "long",
-                            day: "numeric"
-                        });
-                    }
-                },
-            ],
-            defaultColDef: {
-                flex: 1,
-                filter: true,
-                floatingFilter: true,
-                editable: true,
-                sortable: true,
-            },
-            pagination: true,
-            paginationPageSize: 10,
-            rowSelection: "multiple",
-        };
-
-        // Ambil data dari API Laravel
-        fetch('/dashboard/barangs')
-            .then((response) => response.json())
-            .then((result) => {
-                if (result.success) {
-                    gridOptions.rowData = result.data;
-                    // Render Grid
-                    gridApi = agGrid.createGrid(document.querySelector("#myGrid"), gridOptions);
-                } else {
-                    alert("Gagal memuat data dari server");
-                }
-            })
-            .catch((error) => {
-                console.error("Error saat fetch data:", error);
-            });
-    </script>
-@endpush
